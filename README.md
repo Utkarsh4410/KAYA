@@ -95,46 +95,6 @@ graph TD
     D --> I[Hugging Face]
 ```
 
-## 🚀 Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/your-repo/my-baby.git
-
-# Navigate to project directory
-cd my-baby
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-
-# Launch the app
-streamlit run app.py
-```
-
-## 📸 Screenshots
-
-<p align="center">
-<table>
-    <tr>
-        <td align="center"><b>Home Screen</b></td>
-        <td align="center"><b>Pregnancy Tracker</b></td>
-        <td align="center"><b>Health Monitor</b></td>
-    </tr>
-    <tr>
-        <td><img src="path_to_home_screenshot.png" alt="Home Screen"/></td>
-        <td><img src="path_to_tracker_screenshot.png" alt="Pregnancy Tracker"/></td>
-        <td><img src="path_to_health_screenshot.png" alt="Health Monitor"/></td>
-    </tr>
-</table>
-</p>
-
 ## 🤝 Contributing
 
 We love your input! We want to make contributing to My Baby as easy and transparent as possible. Please see our [Contributing Guidelines](CONTRIBUTING.md) for detailed information.
