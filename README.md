@@ -11,9 +11,6 @@
     <a href="https://streamlit.io">
         <img src="https://img.shields.io/badge/Streamlit-1.28%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
     </a>
-    <a href="LICENSE">
-        <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License"/>
-    </a>
     <a href="https://github.com/your-repo/my-baby/issues">
         <img src="https://img.shields.io/github/issues/your-repo/my-baby?style=for-the-badge" alt="Issues"/>
     </a>
@@ -151,10 +148,6 @@ graph LR
     E --> F[Merge]
 ```
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - OpenAI for GPT integration
@@ -173,16 +166,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
     </a>
 </p>
 
-## ⭐ Show your support
-
-Give a ⭐️ if this project helped you!
-
-<p align="center">
-    <a href="https://www.buymeacoffee.com/yourprofile">
-        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="150"/>
-    </a>
-</p>
-
 ---
 
-<p align="center">Made with ❤️ by the My Baby Team</p>
+<p align="center">Made with ❤️ by the Kaya Team</p>
