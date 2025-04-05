@@ -85,7 +85,7 @@
 
 ```mermaid
 graph TD
-    A[My Baby] --> B[Frontend]
+    A[Kaya] --> B[Frontend]
     A --> C[Backend]
     A --> D[AI Services]
     B --> E[Streamlit]
