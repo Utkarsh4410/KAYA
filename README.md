@@ -98,61 +98,6 @@ graph TD
     D --> I[Hugging Face]
 ```
 
-## 👥 Our Amazing Team
-<center>
-<table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/Ahmad-Fakhar">
-            <img src="https://github.com/Ahmad-Fakhar.png" width="100px;" alt="Ahmad Fakhar"/><br />
-            <sub><b>Ahmad Fakhar</b></sub>
-        </a>
-        <br />
-        <sub>Data Analyst</sub>
-        <br />
-        <a href="https://www.linkedin.com/in/ahmad-fakhar-357742258/">
-            <img src="https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin" alt="LinkedIn"/>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Asimbaloch">
-            <img src="https://avatars.githubusercontent.com/u/85347127?v=4" width="100px;" alt="Asim Khan"/><br />
-            <sub><b>Asim Khan</b></sub>
-        </a>
-        <br />
-        <sub>ML Expert</sub>
-        <br />
-        <a href="https://www.linkedin.com/in/asim-khan-baloch/">
-            <img src="https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin" alt="LinkedIn"/>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/devtayyabsajjad">
-            <img src="https://avatars.githubusercontent.com/u/124726671?v=4" width="100px;" alt="Tayyab Sajjiad"/><br />
-            <sub><b>Tayyab Sajjiad</b></sub>
-        </a>
-        <br />
-        <sub>Software Developer</sub>
-        <br />
-        <a href="http://www.linkedin.com/in/tayyab-sajjad-156ab2267">
-            <img src="https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin" alt="LinkedIn"/>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/muhammadibrahim313">
-            <img src="https://github.com/muhammadibrahim313.png" width="100px;" alt="Muhammad Ibrahim"/><br />
-            <sub><b>Muhammad Ibrahim</b></sub>
-        </a>
-        <br />
-        <sub>Data Scientist</sub>
-        <br />
-        <a href="https://www.linkedin.com/in/muhammad-ibrahim-qasmi-9876a1297/">
-            <img src="https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin" alt="LinkedIn"/>
-        </a>
-    </td>
-</tr>
-</table></center>
-
 ## 🚀 Installation
 
 ```bash
