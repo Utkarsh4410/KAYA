@@ -1,160 +1,108 @@
+# pages/4_voice_assistant.py
 import streamlit as st
-import numpy as np
-import io
-import wave
 import os
-from groq import Groq
-from gtts import gTTS
 import tempfile
-import time
-from pydub import AudioSegment
-from pydub.playback import play
+from utils.ai_utils import get_ai_response
 
-# Initialize Groq client
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+st.markdown("""<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+*{font-family:'Inter',sans-serif}
+#MainMenu,footer{visibility:hidden}
+.stButton>button{background:linear-gradient(135deg,#e84393,#fd79a8)!important;color:#fff!important;border:none!important;border-radius:12px!important;padding:.6rem 1.5rem!important;font-weight:600!important;box-shadow:0 4px 15px rgba(232,67,147,.3)!important}
+.stButton>button:hover{transform:translateY(-2px)!important;box-shadow:0 8px 25px rgba(232,67,147,.4)!important}
+.page-hdr{background:linear-gradient(135deg,#e84393,#fd79a8,#fab1a0);border-radius:16px;padding:2rem;color:#fff;margin-bottom:1.5rem;box-shadow:0 12px 40px rgba(232,67,147,.25)}
+.page-hdr h1{font-size:2rem;font-weight:800;margin:0}
+.page-hdr p{opacity:.9;margin:.3rem 0 0}
+.chat-user{background:rgba(232,67,147,.12);border-radius:12px;padding:1rem;margin:.5rem 0;border-left:4px solid #e84393}
+.chat-bot{background:rgba(26,26,46,.8);border-radius:12px;padding:1rem;margin:.5rem 0;border-left:4px solid #fd79a8}
+</style>""", unsafe_allow_html=True)
 
-def record_audio(duration=10):
-    """Simulate recording audio with a placeholder silent audio segment."""
-    st.write("🎤 Listening...")
-    
-    # Create a progress bar for recording duration
-    progress_bar = st.progress(0)
-    
-    # Simulate recording by creating a silent audio segment
-    audio = AudioSegment.silent(duration=duration * 1000)  # Duration in milliseconds
-    
-    # Update progress bar
-    for i in range(duration):
-        time.sleep(1)  # Simulate recording time
-        progress_bar.progress((i + 1) / duration)
-    
-    progress_bar.empty()
-    
-    # Save to temporary WAV file
-    temp_wav = tempfile.NamedTemporaryFile(delete=False, suffix='.wav')
-    audio.export(temp_wav.name, format="wav")
-    
-    return temp_wav.name
+# Optional TTS
+try:
+    from gtts import gTTS
+    TTS_AVAILABLE = True
+except ImportError:
+    TTS_AVAILABLE = False
 
-def get_ai_response(text, context=""):
-    """Get conversational response from LLaMA model."""
+def speak(text):
+    """Convert text to speech and return the audio file path."""
+    if not TTS_AVAILABLE:
+        return None
     try:
-        # Create a more conversational prompt
-        prompt = f"""Previous context: {context}
-        User said: {text}
-        Please respond in a friendly, conversational way. Keep responses brief but natural.
-        """
-        
-        chat_completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
-            model="llama-3.3-70b-versatile",
-            max_tokens=50  # Keep responses shorter
-        )
-        return chat_completion.choices[0].message.content
-    except Exception as e:
-        return f"Sorry, I couldn't process that. {str(e)}"
-
-def text_to_speech(text):
-    """Convert text to speech with optimized settings."""
-    try:
-        temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix='.mp3')
-        tts = gTTS(text, lang='en', slow=False)
-        tts.save(temp_audio.name)
-        return temp_audio.name
-    except Exception as e:
-        return f"Error with speech: {str(e)}"
+        tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+        gTTS(text, lang="en", slow=False).save(tmp.name)
+        return tmp.name
+    except Exception:
+        return None
 
 def voice_assistant_page():
-    st.title("💬 Voice Chat Assistant")
-    
-    # Initialize session state for conversation
-    if 'conversation' not in st.session_state:
-        st.session_state.conversation = []
-    
-    # Simple chat interface
-    chat_container = st.container()
-    
-    # Voice recording button with status
-    col1, col2 = st.columns([1, 3])
-    
-    with col1:
-        if st.button("🎤 Start Chat", key="chat_button"):
-            # Record audio and get temporary file path
-            temp_wav_path = record_audio(5)  # 5 seconds recording
-            
-            try:
-                # Process speech to text
-                with st.spinner("Processing..."):
-                    with open(temp_wav_path, 'rb') as audio_file:
-                        transcription = client.audio.transcriptions.create(
-                            file=audio_file,
-                            model="whisper-large-v3-turbo"
-                        ).text
-                    
-                    # Get recent context (last 2 exchanges)
-                    recent_context = " ".join([
-                        f"{msg['role']}: {msg['content']}" 
-                        for msg in st.session_state.conversation[-4:]
-                    ])
-                    
-                    # Get AI response
-                    response = get_ai_response(transcription, recent_context)
-                    
-                    # Convert to speech quickly
-                    audio_file_path = text_to_speech(response)
-                    
-                    # Update conversation
-                    st.session_state.conversation.extend([
-                        {"role": "user", "content": transcription},
-                        {"role": "assistant", "content": response}
-                    ])
-                    
-                    # Play response
-                    st.audio(audio_file_path)
-                    
-                    # Clean up temporary files
-                    os.unlink(temp_wav_path)
-                    os.unlink(audio_file_path)
-                    
-            except Exception as e:
-                st.error(f"Error processing audio: {str(e)}")
-                if os.path.exists(temp_wav_path):
-                    os.unlink(temp_wav_path)
-    
-    with col2:
-        # Quick phrases for testing
-        st.markdown("### Quick Phrases")
-        quick_phrases = [
-            "How are you?",
-            "What's the weather like?",
-            "Tell me a joke",
-            "What time is it?",
-            "Goodbye"
-        ]
-        
-        selected_phrase = st.selectbox("Try a phrase:", quick_phrases)
-        if st.button("Send"):
-            with st.spinner("Getting response..."):
-                response = get_ai_response(selected_phrase)
-                audio_file_path = text_to_speech(response)
-                
-                st.session_state.conversation.extend([
-                    {"role": "user", "content": selected_phrase},
-                    {"role": "assistant", "content": response}
-                ])
-                
-                st.audio(audio_file_path)
-                os.unlink(audio_file_path)
-    
-    # Display conversation in chat-like format
-    with chat_container:
-        st.markdown("### Conversation")
-        for message in st.session_state.conversation[-6:]:  # Show last 3 exchanges
-            if message["role"] == "user":
-                st.markdown(f"**You:** {message['content']}")
-            else:
-                st.markdown(f"**Assistant:** {message['content']}")
-            st.markdown("---")
+    st.markdown('<div class="page-hdr"><h1>🎙️ AI Chat Assistant</h1><p>Ask anything about pregnancy — get instant AI-powered answers with optional text-to-speech</p></div>', unsafe_allow_html=True)
+
+    # Init session state
+    if "va_messages" not in st.session_state:
+        st.session_state.va_messages = []
+    if "va_tts" not in st.session_state:
+        st.session_state.va_tts = True
+
+    # Settings
+    col_set1, col_set2 = st.columns([3, 1])
+    with col_set2:
+        if TTS_AVAILABLE:
+            st.session_state.va_tts = st.toggle("🔊 Read aloud", value=st.session_state.va_tts, key="tts_toggle")
+
+    # Display conversation history
+    for msg in st.session_state.va_messages:
+        if msg["role"] == "user":
+            st.markdown(f'<div class="chat-user"><strong>You:</strong> {msg["content"]}</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="chat-bot"><strong>Kaya:</strong> {msg["content"]}</div>', unsafe_allow_html=True)
+
+    # Quick phrases
+    st.markdown("### ⚡ Quick Questions")
+    qc1, qc2, qc3, qc4 = st.columns(4)
+    quick_phrases = {
+        "qp1": ("🤰 Pregnancy tips", "Give me 3 quick pregnancy wellness tips with emojis."),
+        "qp2": ("🥗 Nutrition advice", "What are the top 3 foods I should eat during pregnancy? Be concise."),
+        "qp3": ("😴 Sleep help", "How can I sleep better during pregnancy? Give 3 tips with emojis."),
+        "qp4": ("🧘 Relaxation", "Suggest a 5-minute relaxation exercise for a pregnant woman. Be concise."),
+    }
+    cols = [qc1, qc2, qc3, qc4]
+    for i, (key, (label, prompt)) in enumerate(quick_phrases.items()):
+        with cols[i]:
+            if st.button(label, key=f"btn_{key}"):
+                st.session_state.va_messages.append({"role": "user", "content": label})
+                with st.spinner("Thinking…"):
+                    resp = get_ai_response(f"You are Kaya, a friendly pregnancy assistant. {prompt}")
+                st.session_state.va_messages.append({"role": "assistant", "content": resp})
+                if st.session_state.va_tts:
+                    audio_path = speak(resp)
+                    if audio_path:
+                        st.audio(audio_path)
+                        os.unlink(audio_path)
+                st.rerun()
+
+    # Chat input
+    st.markdown("### 💬 Ask Kaya Anything")
+    user_input = st.chat_input("Type your question here…", key="va_chat_input")
+    if user_input:
+        st.session_state.va_messages.append({"role": "user", "content": user_input})
+        # Build context from last 4 messages
+        ctx = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state.va_messages[-4:]])
+        with st.spinner("Thinking…"):
+            resp = get_ai_response(f"You are Kaya, a friendly pregnancy assistant. Context:\n{ctx}\n\nUser: {user_input}\nRespond helpfully and concisely.")
+        st.session_state.va_messages.append({"role": "assistant", "content": resp})
+        if st.session_state.va_tts:
+            audio_path = speak(resp)
+            if audio_path:
+                st.audio(audio_path)
+                os.unlink(audio_path)
+        st.rerun()
+
+    # Clear chat
+    if st.session_state.va_messages:
+        if st.button("🗑️ Clear Chat", key="btn_clear_chat"):
+            st.session_state.va_messages = []
+            st.rerun()
 
 if __name__ == "__main__":
     voice_assistant_page()

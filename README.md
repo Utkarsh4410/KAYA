@@ -1,7 +1,7 @@
-# My Baby - AI Pregnancy Assistant
+# Kaya — AI Pregnancy Assistant 👶
 
 <p align="center">
-    <img src="path_to_your_logo.png" alt="My Baby Logo" width="200"/>
+    <img src="images/MY BABY.png" alt="Kaya Logo" width="200"/>
 </p>
 
 <p align="center">
@@ -11,121 +11,158 @@
     <a href="https://streamlit.io">
         <img src="https://img.shields.io/badge/Streamlit-1.28%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
     </a>
-    <a href="https://github.com/your-repo/my-baby/issues">
-        <img src="https://img.shields.io/github/issues/your-repo/my-baby?style=for-the-badge" alt="Issues"/>
+    <a href="https://console.groq.com">
+        <img src="https://img.shields.io/badge/Groq-LLaMA_3.3-orange?style=for-the-badge" alt="Groq AI"/>
     </a>
 </p>
 
 <p align="center">
-    <a href="#demo">View Demo</a>
+    <a href="#-features">Features</a>
     ·
-    <a href="#installation">Installation Guide</a>
+    <a href="#-quick-start">Quick Start</a>
     ·
-    <a href="#contributing">Contributing</a>
+    <a href="#-tech-stack">Tech Stack</a>
     ·
-    <a href="#support">Support</a>
+    <a href="#-contributing">Contributing</a>
 </p>
 
 ## 🌟 Overview
 
-**My Baby** is a comprehensive AI-powered web application designed to support mothers throughout their pregnancy journey. Built with Streamlit and powered by advanced AI models, it offers personalized guidance, health monitoring, and essential pregnancy-related information at your fingertips.
-
-<p align="center">
-    <img src="path_to_demo.gif" alt="My Baby Demo" width="600"/>
-</p>
+**Kaya** is a comprehensive AI-powered web application designed to support mothers throughout their pregnancy journey. Built with Streamlit and powered by **Groq's LLaMA 3.3** model, it offers personalised guidance, health monitoring, and essential pregnancy-related information at your fingertips.
 
 ## ✨ Features
 
 <details>
-<summary>🗓️ Pregnancy Tracker</summary>
+<summary>📅 Pregnancy Tracker</summary>
 <br>
-• Week-by-week development tracking<br>
-• Important milestone notifications<br>
-• Customized pregnancy timeline<br>
-• Baby growth visualization
+• Week-by-week development tracking (all 40 weeks)<br>
+• Interactive pregnancy progress gauge<br>
+• Baby size visualisation with fruit comparisons<br>
+• AI-powered personalised insights<br>
+• Milestone timeline with checklists
 </details>
 
 <details>
-<summary>🏥 Health Monitoring</summary>
+<summary>🩺 Health Monitoring</summary>
 <br>
-• Mental health assessment and tips<br>
-• Physical symptom checker<br>
-• Automated health alerts<br>
-• Mood tracking and analysis
+• Weight tracking with trend charts<br>
+• Blood pressure logging with alerts<br>
+• Mental health assessment & AI tips<br>
+• Mood and stress tracking<br>
+• Symptom checker with AI assessment
 </details>
 
 <details>
 <summary>🥗 Nutrition & Exercise</summary>
 <br>
-• Trimester-specific meal plans<br>
-• Safe exercise routines<br>
-• Nutritional recommendations<br>
-• Customized workout schedules
+• AI-generated personalised meal plans<br>
+• Trimester-specific nutritional guidance<br>
+• Safe exercise routines by fitness level<br>
+• Progress tracking (water, steps, meals)
 </details>
 
 <details>
-<summary>🎤 Voice-Activated Assistant</summary>
+<summary>🎙️ AI Chat Assistant</summary>
 <br>
-• Hands-free interaction<br>
-• Voice command support<br>
-• Natural language processing<br>
-• Multi-language support
+• Text-based chat with Kaya AI<br>
+• Quick-question buttons for common topics<br>
+• Optional text-to-speech responses<br>
+• Conversation history
 </details>
 
 <details>
 <summary>👩‍⚕️ Virtual Doula</summary>
 <br>
-• Labor preparation guidance<br>
-• Postpartum care information<br>
-• 24/7 AI-powered support<br>
-• Emergency protocol assistance
+• AI-generated birth plan creator<br>
+• Contraction timer with pattern tracking<br>
+• Labour position recommendations<br>
+• Postpartum recovery timeline<br>
+• Daily self-care checklist & mood tracker
 </details>
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.8+
+- A free [Groq API key](https://console.groq.com/keys)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Utkarsh4410/KAYA.git
+cd KAYA
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # macOS/Linux
+# venv\Scripts\activate   # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up your API key
+cp .env.example .env
+# Edit .env and add your GROQ_API_KEY
+```
+
+### Run
+
+```bash
+streamlit run My_Baby.py
+```
+
+The app will open at `http://localhost:8501`.
 
 ## 💻 Tech Stack
 
-```mermaid
-graph TD
-    A[Kaya] --> B[Frontend]
-    A --> C[Backend]
-    A --> D[AI Services]
-    B --> E[Streamlit]
-    C --> F[Python]
-    C --> G[SQLite]
-    D --> H[OpenAI]
-    D --> I[Hugging Face]
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | Streamlit |
+| **AI Model** | LLaMA 3.3 70B (via Groq) |
+| **Speech** | Whisper V3, Google TTS |
+| **Charts** | Plotly |
+| **Data** | Pandas, NumPy |
+| **Language** | Python 3.8+ |
+
+## 📁 Project Structure
+
+```
+KAYA/
+├── My_Baby.py                  # Main app (home page)
+├── pages/
+│   ├── 1_📅Pregnancy_Tracker.py
+│   ├── 2_🩺health_monitoring.py
+│   ├── 3_🥗Nutrition_Exercise.py
+│   ├── 4_🎙️voice_assistant.py
+│   └── 5_💬Virtual_Doula.py
+├── utils/
+│   ├── ai_utils.py             # Groq AI wrapper
+│   └── constants.py            # Pregnancy data
+├── images/
+│   └── MY BABY.png
+├── .streamlit/
+│   └── config.toml             # Theme configuration
+├── requirements.txt
+├── .env.example
+└── README.md
 ```
 
 ## 🤝 Contributing
 
-We love your input! We want to make contributing to My Baby as easy and transparent as possible. Please see our [Contributing Guidelines](CONTRIBUTING.md) for detailed information.
+Contributions are welcome! Please:
 
-```mermaid
-graph LR
-    A[Fork] -->B[Feature Branch]
-    B --> C[Changes]
-    C --> D[Pull Request]
-    D --> E[Review]
-    E --> F[Merge]
-```
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 🙏 Acknowledgments
+## 📄 License
 
-- OpenAI for GPT integration
-- Hugging Face for transformer models
-- Streamlit team for the amazing framework
-- All contributors who helped make this project possible
-
-## 📞 Support
-
-<p align="center">
-    <a href="https://github.com/your-repo/my-baby/issues">
-        <img src="https://img.shields.io/badge/Report%20Issues-GitHub-green?style=for-the-badge&logo=github" alt="Report Issues"/>
-    </a>
-    <a href="mailto:support@mybaby.com">
-        <img src="https://img.shields.io/badge/Email%20Support-Mail-red?style=for-the-badge&logo=gmail" alt="Email Support"/>
-    </a>
-</p>
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">Made with ❤️ by the Kaya Team</p>
+<p align="center">Made with ❤️ for mothers everywhere</p>
