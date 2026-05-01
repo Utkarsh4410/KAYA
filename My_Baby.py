@@ -176,7 +176,7 @@ section[data-testid="stSidebar"] .stImage {
 def main():
     # ── Sidebar ─────────────────────────────────────────
     with st.sidebar:
-        st.image("images/MY BABY.png", use_container_width=True)
+        st.image("images/MY BABY.png", use_column_width=True)
         st.markdown("---")
         st.markdown("### 🔗 Quick Links")
         st.page_link("My_Baby.py", label="🏠 Home", icon=None)
