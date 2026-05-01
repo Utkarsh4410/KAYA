@@ -1,5 +1,6 @@
 # utils/ai_utils.py
 import os
+import streamlit as st
 from groq import Groq
 from dotenv import load_dotenv
 
@@ -7,12 +8,28 @@ load_dotenv()
 
 
 def get_groq_client():
-    """Return an initialised Groq client using the env-var API key."""
-    api_key = os.getenv("GROQ_API_KEY")
+    """Return an initialised Groq client.
+
+    Key resolution order:
+    1. st.secrets["GROQ_API_KEY"]  — Streamlit Community Cloud
+    2. GROQ_API_KEY environment variable — local .env via python-dotenv
+    """
+    api_key = None
+
+    # 1. Try Streamlit secrets (Streamlit Cloud deployment)
+    try:
+        api_key = st.secrets["GROQ_API_KEY"]
+    except (KeyError, FileNotFoundError):
+        pass
+
+    # 2. Fall back to environment variable (local development)
+    if not api_key:
+        api_key = os.getenv("GROQ_API_KEY")
+
     if not api_key:
         raise ValueError(
             "GROQ_API_KEY not found. "
-            "Create a .env file with GROQ_API_KEY=your_key_here"
+            "Set it in Streamlit Cloud secrets or create a local .env file."
         )
     return Groq(api_key=api_key)
 
